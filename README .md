@@ -110,13 +110,47 @@ Il génère aussi :
 - possibilité d’analyser un fichier CSV existant fourni par l’utilisateur
 - possibilité de générer un grand nombre de produits automatiquement
 
-## Technologies utilisées
 
-- Python 3
-- Module `csv`
-- Module `os`
-- Module `random`
-- Module `matplotlib`
+## Bibliothèques utilisées
+
+Ce projet Python utilise les bibliothèques suivantes :
+
+- `csv` : pour lire et écrire les fichiers CSV
+- `os` : pour vérifier l'existence des fichiers et gérer certains chemins
+- `random` : pour générer des données de ventes aléatoires
+- `matplotlib.pyplot` : pour afficher un graphique du chiffre d'affaires par produit
+
+## Prérequis
+
+Avant d'exécuter le projet, il faut avoir :
+
+- Python 3 installé
+- la bibliothèque `matplotlib` installée
+
+## Installation
+
+Installez la bibliothèque nécessaire avec la commande suivante :
+
+```bash
+pip install matplotlib
+```
+
+## Exécution
+
+Lancez le projet avec :
+
+```bash
+python main.py
+```
+
+## Fichiers du projet
+
+- `main.py` : programme principal
+- `generer_ventes.py` : génération automatique du fichier `ventes.csv`
+- `ventes.csv` : fichier source des ventes
+- `resultats_final.csv` : fichier de sortie contenant les résultats calculés
+- `README.md` : documentation du projet
+- `.gitignore` : fichiers ignorés par Git
 
 ## Auteur
 

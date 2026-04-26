@@ -1,12 +1,17 @@
 import csv
 import random
 
+# Générer un grand nombre de produits
 nombre_produits = int(input("Entrez le nombre de produits à générer : "))
 
+# Générer ventes.csv
 with open("ventes.csv", mode="w", newline="", encoding="utf-8") as fichier:
     ecrivain = csv.writer(fichier)
+
+    # En-tête demandé dans le sujet
     ecrivain.writerow(["ID", "Prix", "Quantite", "Remise"])
 
+    # Générer les lignes de ventes
     for i in range(1, nombre_produits + 1):
         id_produit = 100 + i
         prix = round(random.uniform(5, 500), 2)
