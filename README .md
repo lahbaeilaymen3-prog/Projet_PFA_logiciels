@@ -154,4 +154,4 @@ python main.py
 
 ## Auteur
 
-Projet réalisé par Aymen Lahbaeil et Slim Hableni.
+Projet réalisé par Aymen Lahbaeil , Slim Hableni et Ahmed Dridi.

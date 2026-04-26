@@ -101,5 +101,5 @@ else:
                 plt.title("CA Net par produit")
                 plt.xlabel("ID du produit")
                 plt.ylabel("CA Net")
+                plt.xticks(rotation=90)
                 plt.show()
-                
