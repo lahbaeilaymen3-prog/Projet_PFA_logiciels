@@ -1,37 +1,48 @@
-# Projet de Fin d’Année — Automatisation des Ventes
+# Projet de Fin d'Année — Automatisation des Ventes
 
-Ce projet Python automatise l’analyse des ventes à partir d’un fichier CSV, conformément au sujet du PFA [file:1].
+**Matière :** Logiciels  
+**Auteurs :** Aymen Lahbaeil, Slim Hableni, Ahmed Dridi
+
+---
+
+## Contexte
+
+Une entreprise de e-commerce utilise un fichier Excel pour suivre ses ventes. Le volume de données devient trop important pour un tableur classique. Ce projet Python automatise l'analyse des ventes à partir d'un fichier CSV, conformément au sujet du PFA.
+
+---
 
 ## Objectif
 
 Le programme permet de :
 
-- générer le fichier `ventes.csv` avec l’en-tête `ID,Prix,Quantite,Remise` [file:1]
-- lire un fichier CSV existant ou utiliser `ventes.csv` par défaut [file:1]
-- calculer le chiffre d’affaires brut (`CA_Brut = Prix × Quantite`) [file:1]
-- appliquer la remise pour obtenir le chiffre d’affaires net (`CA_Net`) [file:1]
-- calculer la TVA de 20 % sur le CA net [file:1]
-- afficher le CA total de l’entreprise [file:1]
-- identifier l’ID du produit ayant généré le plus gros bénéfice [file:1]
-- exporter les résultats dans `resultats_final.csv` [file:1]
-- afficher un graphique simple avec Matplotlib pour visualiser le CA par produit [file:1]
+- Créer `ventes.csv` avec les données d'exemple du sujet (`ID,Prix,Quantite,Remise`)
+- Générer `ventes.csv` automatiquement avec un grand nombre de produits aléatoires
+- Lire dynamiquement n'importe quel fichier CSV existant
+- Calculer le **Chiffre d'Affaires Brut** : `CA_Brut = Prix × Quantite`
+- Appliquer la remise pour obtenir le **CA Net** : `CA_Net = CA_Brut × (1 - Remise / 100)`
+- Calculer la **TVA (20%)** sur le CA Net : `TVA = CA_Net × 0.20`
+- Afficher le **CA Total** de l'entreprise
+- Identifier l'**ID du produit** ayant généré le plus gros CA Net
+- Exporter les résultats dans `resultats_final.csv`
+- Générer deux graphiques Matplotlib sauvegardés en PNG
+
+---
 
 ## Fichiers du projet
 
-- `main.py` : script principal pour créer `ventes.csv` si nécessaire, analyser les ventes, exporter `resultats_final.csv` et afficher le graphique.
-- `generer_ventes.py` : script optionnel pour générer automatiquement un grand nombre de produits dans `ventes.csv`.
-- `ventes.csv` : fichier d’entrée contenant les ventes.
-- `resultats_final.csv` : fichier de sortie contenant les colonnes d’origine et les colonnes calculées.
+| Fichier | Description |
+|---|---|
+| `main.py` | Script unique : menu principal, création CSV, génération aléatoire, analyse, graphiques |
+| `ventes.csv` | Fichier d'entrée des ventes (créé via le menu) |
+| `resultats_final.csv` | Fichier de sortie avec les colonnes calculées (CA_Brut, CA_Net, TVA) |
+| `README.md` | Documentation du projet |
+| `.gitignore` | Fichiers ignorés par Git |
+
+> ℹ️ Ce projet ne contient qu'un seul fichier Python (`main.py`). Les fonctionnalités de génération aléatoire sont intégrées directement dans le menu.
+
+---
 
 ## Structure de `ventes.csv`
-
-Le fichier `ventes.csv` doit contenir l’en-tête suivant :
-
-```csv
-ID,Prix,Quantite,Remise
-```
-
-Exemple de contenu :
 
 ```csv
 ID,Prix,Quantite,Remise
@@ -40,118 +51,163 @@ ID,Prix,Quantite,Remise
 103,10.0,5,0
 ```
 
-Ces valeurs correspondent à l’exemple donné dans le sujet [file:1].
+## Structure de `resultats_final.csv` (sortie)
+
+```
+ID, Prix, Quantite, Remise, CA_Brut, CA_Net, TVA
+```
+
+---
 
 ## Utilisation
 
-### 1. Créer automatiquement `ventes.csv`
-
-Lancer :
-
-```bash
-python3 main.py
-```
-
-Si `ventes.csv` n’existe pas, le programme le crée automatiquement avec l’en-tête demandé [file:1].
-
-### 2. Remplir `ventes.csv`
-
-Deux possibilités :
-
-- remplir le fichier manuellement
-- ou utiliser `generer_ventes.py` pour générer beaucoup de produits automatiquement
-
-### 3. Générer plusieurs produits automatiquement
-
-Lancer :
-
-```bash
-python3 generer_ventes.py
-```
-
-Puis entrer par exemple :
-
-```bash
-1000
-```
-
-Le script crée alors un fichier `ventes.csv` avec 1000 produits.
-
-### 4. Analyser les ventes
-
-Lancer ensuite :
-
-```bash
-python3 main.py
-```
-
-Le programme peut :
-
-- utiliser `ventes.csv` par défaut
-- ou analyser un autre fichier CSV existant saisi par l’utilisateur
-
-### 5. Résultats obtenus
-
-Le programme affiche :
-
-- le nombre de produits traités
-- le CA total de l’entreprise [file:1]
-- l’ID du produit avec le plus gros bénéfice [file:1]
-
-Il génère aussi :
-
-- `resultats_final.csv` [file:1]
-- un graphique Matplotlib du CA Net par produit [file:1]
-
-## Bonus réalisés
-
-- graphique simple avec Matplotlib pour visualiser le CA par produit [file:1]
-- lecture dynamique de fichiers CSV de tailles différentes [file:1]
-- possibilité d’analyser un fichier CSV existant fourni par l’utilisateur
-- possibilité de générer un grand nombre de produits automatiquement
-
-
-## Bibliothèques utilisées
-
-Ce projet Python utilise les bibliothèques suivantes :
-
-- `csv` : pour lire et écrire les fichiers CSV
-- `os` : pour vérifier l'existence des fichiers et gérer certains chemins
-- `random` : pour générer des données de ventes aléatoires
-- `matplotlib.pyplot` : pour afficher un graphique du chiffre d'affaires par produit
-
-## Prérequis
-
-Avant d'exécuter le projet, il faut avoir :
-
-- Python 3 installé
-- la bibliothèque `matplotlib` installée
-
-## Installation
-
-Installez la bibliothèque nécessaire avec la commande suivante :
-
-```bash
-pip install matplotlib
-```
-
-## Exécution
-
-Lancez le projet avec :
+### Lancer le programme
 
 ```bash
 python main.py
 ```
 
-## Fichiers du projet
+Un menu s'affiche à chaque lancement :
 
-- `main.py` : programme principal
-- `generer_ventes.py` : génération automatique du fichier `ventes.csv`
-- `ventes.csv` : fichier source des ventes
-- `resultats_final.csv` : fichier de sortie contenant les résultats calculés
-- `README.md` : documentation du projet
-- `.gitignore` : fichiers ignorés par Git
+```
+==================================================
+   🛒  Automatisation des Ventes
+==================================================
+  1. Créer ventes.csv avec les données d'exemple
+  2. Générer ventes.csv avec des données aléatoires
+  3. Analyser un fichier CSV existant
+  0. Quitter
+==================================================
+Votre choix :
+```
 
-## Auteur
+---
 
-Projet réalisé par Aymen Lahbaeil , Slim Hableni et Ahmed Dridi.
+### Option 1 — Créer `ventes.csv` avec les données d'exemple
+
+Crée `ventes.csv` avec les 3 lignes d'exemple du sujet (ID 101, 102, 103).  
+Si le fichier existe déjà, le programme demande une confirmation avant de le remplacer :
+
+```
+⚠️  Le fichier ventes.csv existe déjà. Voulez-vous le remplacer ? (o/n) :
+```
+
+Une fois créé, remplissez le fichier manuellement puis passez à l'**option 3** pour l'analyser.
+
+---
+
+### Option 2 — Générer `ventes.csv` avec des données aléatoires
+
+Génère `ventes.csv` avec un nombre de produits saisi par l'utilisateur :
+
+```
+Entrez le nombre de produits à générer :
+```
+
+Chaque produit est généré avec :
+- un prix aléatoire entre 5 € et 500 €
+- une quantité aléatoire entre 1 et 20
+- une remise parmi : 0, 5, 10, 15, 20 ou 25 %
+
+---
+
+### Option 3 — Analyser un fichier CSV existant
+
+Le programme demande le nom du fichier à analyser :
+
+```
+Entrez le nom du fichier CSV à analyser (appuyez sur Entrée pour utiliser ventes.csv) :
+```
+
+- Appuyez sur **Entrée** pour utiliser `ventes.csv` par défaut
+- Ou saisissez le nom d'un autre fichier CSV
+
+#### Résultats affichés dans le terminal
+
+```
+==================================================
+  📦 Nombre de produits traités : 1000
+  💰 CA Total de l'entreprise   : 2 845 123,45 EUR
+  🏆 Produit le plus rentable   : ID 247  (9 870,00 EUR CA Net)
+==================================================
+```
+
+#### Fichier exporté
+
+```
+✅ Fichier 'resultats_final.csv' créé avec succès (1000 lignes).
+```
+
+#### Graphiques générés et sauvegardés
+
+Le programme génère automatiquement deux graphiques PNG dans le dossier du projet :
+
+**Graphique 1 — Barres horizontales** (`graphique_barres.png`)  
+CA Net par produit, classé par ordre décroissant. Si le nombre de produits dépasse 30, plusieurs pages sont créées (`graphique_barres_page1.png`, `graphique_barres_page2.png`, etc.). Le meilleur produit est mis en valeur en orange.
+
+**Graphique 2 — Camembert** (`graphique_camembert.png`)  
+Répartition du CA Net entre les produits. Au-delà du top 9, les produits restants sont regroupés sous « Autres ». Le meilleur produit est mis en valeur (part décalée).
+
+---
+
+## Bonus réalisés
+
+- ✅ Graphiques Matplotlib : barres horizontales paginées + camembert de répartition
+- ✅ Sauvegarde des graphiques en PNG avant affichage (ordre correct)
+- ✅ Lecture dynamique de fichiers CSV de tailles différentes
+- ✅ Gestion des lignes invalides (avertissement affiché, ligne ignorée)
+- ✅ Génération aléatoire intégrée directement dans `main.py` (pas de fichier séparé)
+- ✅ Confirmation avant écrasement d'un fichier existant (option 1)
+
+---
+
+## Bibliothèques utilisées
+
+| Bibliothèque | Usage |
+|---|---|
+| `csv` | Lecture et écriture des fichiers CSV |
+| `os` | Gestion des chemins de fichiers |
+| `random` | Génération aléatoire des données (option 2) |
+| `matplotlib.pyplot` | Affichage et sauvegarde des graphiques |
+| `matplotlib.ticker` | Formatage des axes (valeurs en euros) |
+| `matplotlib.patches` | Légendes colorées des graphiques |
+
+---
+
+## Environnement requis
+
+### 1. Logiciels à installer
+
+| Logiciel | Lien de téléchargement |
+|---|---|
+| Python 3 | [python.org/downloads](https://www.python.org/downloads/) |
+| VS Code | [code.visualstudio.com](https://code.visualstudio.com/) |
+
+> ⚠️ Lors de l'installation de Python, cochez **"Add Python to PATH"**.
+
+### 2. Extension VS Code
+
+Dans VS Code, installer l'extension **Python** (by Microsoft) via le panneau Extensions (`Ctrl+Shift+X`).
+
+### 3. Installer la dépendance Python
+
+```bash
+pip install matplotlib
+```
+
+### 4. Vérifier l'installation
+
+```bash
+python --version
+pip --version
+```
+
+Si les deux commandes affichent un numéro de version, l'environnement est prêt. ✅
+
+---
+
+## Exécution
+
+```bash
+python main.py
+```
