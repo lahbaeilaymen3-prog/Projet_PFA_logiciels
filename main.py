@@ -4,6 +4,8 @@ import random
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 import matplotlib.patches as mpatches
+import matplotlib.image as mpimg
+from matplotlib.widgets import Button
 
 
 # -------------------------------------------------------
@@ -98,7 +100,7 @@ def tracer_barres(ids_page, ca_page, meilleur_id, num_page, nb_pages, dossier):
 
     nom = f"graphique_barres_page{num_page}.png" if nb_pages > 1 else "graphique_barres.png"
     sauvegarder(fig, dossier, nom)
-    plt.show()
+    # ← plt.show() supprimé : l'affichage se fait via le diaporama
     plt.close(fig)
 
 
@@ -156,8 +158,95 @@ def tracer_camembert(ids_tries, ca_nets_tries, meilleur_id, dossier):
 
     plt.tight_layout()
     sauvegarder(fig, dossier, "graphique_camembert.png")
-    plt.show()
+    # ← plt.show() supprimé : l'affichage se fait via le diaporama
     plt.close(fig)
+
+
+# -------------------------------------------------------
+# Diaporama interactif (NOUVEAU)
+# -------------------------------------------------------
+
+def lancer_diaporama(dossier):
+    """
+    Ouvre une seule fenêtre avec boutons ◀ ▶ pour naviguer
+    entre tous les graphiques PNG générés.
+    Navigation clavier : flèches gauche / droite.
+    """
+    import glob
+
+    fichiers_barres    = sorted(glob.glob(os.path.join(dossier, "graphique_barres*.png")))
+    fichiers_camembert = glob.glob(os.path.join(dossier, "graphique_camembert.png"))
+    fichiers = fichiers_barres + fichiers_camembert
+
+    if not fichiers:
+        print("⚠️  Aucun graphique PNG trouvé pour le diaporama.")
+        return
+
+    index = [0]
+
+    fig_d, ax_d = plt.subplots(figsize=(14, 8))
+    fig_d.patch.set_facecolor("#F8F9FA")
+    plt.subplots_adjust(bottom=0.13, top=0.93)
+
+    def afficher(i):
+        ax_d.clear()
+        img = mpimg.imread(fichiers[i])
+        ax_d.imshow(img)
+        ax_d.axis("off")
+        nom = os.path.basename(fichiers[i])
+        fig_d.suptitle(
+            f"{nom}   —   {i + 1} / {len(fichiers)}",
+            fontsize=10, color="#555555",
+        )
+        fig_d.canvas.draw_idle()
+
+    def suivant(event):
+        index[0] = (index[0] + 1) % len(fichiers)
+        afficher(index[0])
+
+    def precedent(event):
+        index[0] = (index[0] - 1) % len(fichiers)
+        afficher(index[0])
+
+    def premier(event):
+        index[0] = 0
+        afficher(index[0])
+
+    def dernier(event):
+        index[0] = len(fichiers) - 1
+        afficher(index[0])
+
+    def on_key(event):
+        if event.key == "right":
+            suivant(None)
+        elif event.key == "left":
+            precedent(None)
+        elif event.key == "home":
+            premier(None)
+        elif event.key == "end":
+            dernier(None)
+
+    fig_d.canvas.mpl_connect("key_press_event", on_key)
+
+    ax_premier = fig_d.add_axes([0.18, 0.025, 0.10, 0.055])
+    ax_prev    = fig_d.add_axes([0.30, 0.025, 0.14, 0.055])
+    ax_next    = fig_d.add_axes([0.56, 0.025, 0.14, 0.055])
+    ax_dernier = fig_d.add_axes([0.72, 0.025, 0.10, 0.055])
+
+    btn_premier = Button(ax_premier, "⏮  Premier",  color="#E8EAF6", hovercolor="#C5CAE9")
+    btn_prev    = Button(ax_prev,    "◀  Précédent", color="#E8EAF6", hovercolor="#C5CAE9")
+    btn_next    = Button(ax_next,    "Suivant  ▶",   color="#E8EAF6", hovercolor="#C5CAE9")
+    btn_dernier = Button(ax_dernier, "Dernier  ⏭",  color="#E8EAF6", hovercolor="#C5CAE9")
+
+    btn_premier.on_clicked(premier)
+    btn_prev.on_clicked(precedent)
+    btn_next.on_clicked(suivant)
+    btn_dernier.on_clicked(dernier)
+
+    afficher(0)
+    print(f"\n🖼️  Diaporama ouvert : {len(fichiers)} graphique(s)")
+    print("   Naviguez avec les boutons ou les flèches ← →\n")
+    plt.show()
 
 
 # -------------------------------------------------------
@@ -361,7 +450,12 @@ def analyser_ventes(dossier_script):
     # --- Graphique 2 : Camembert de répartition ---
     tracer_camembert(ids_tries, ca_nets_tries, meilleur_id, dossier_script)
 
-    print("\n✅ Tous les graphiques ont été affichés et sauvegardés dans le dossier du projet.")
+    print("\n✅ Tous les graphiques ont été sauvegardés dans le dossier du projet.")
+
+    # -------------------------------------------------------
+    # NOUVEAU : Lancement du diaporama interactif
+    # -------------------------------------------------------
+    lancer_diaporama(dossier_script)
 
 
 # -------------------------------------------------------
